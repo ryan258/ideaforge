@@ -8,13 +8,11 @@
     </q-header>
 
     <q-page-container>
-      <q-page class="q-pa-md">
-        <TheCrucible />
-      </q-page>
+      <router-view></router-view>
     </q-page-container>
   </q-layout>
 </template>
 
 <script setup lang="ts">
-import TheCrucible from './components/TheCrucible.vue'
+// No setup needed
 </script>

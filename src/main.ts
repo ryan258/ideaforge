@@ -1,21 +1,25 @@
 // src/main.ts
 import { createApp } from 'vue'
-import { Quasar, Notify } from 'quasar'
-import quasarIconSet from 'quasar/icon-set/material-icons'
+import { createPinia } from 'pinia'
+import { Quasar } from 'quasar'
+import quasarLang from 'quasar/lang/en-US'
+
+// Import icon libraries
+import '@quasar/extras/material-icons/material-icons.css'
 
 // Import Quasar css
 import 'quasar/src/css/index.sass'
 
-// Assumes you have an App.vue file in same folder as main.js
 import App from './App.vue'
+import router from './router'
 
-const myApp = createApp(App)
+const app = createApp(App)
 
-myApp.use(Quasar, {
-  plugins: {
-    Notify
-  },
-  iconSet: quasarIconSet,
+app.use(createPinia())
+app.use(router)
+app.use(Quasar, {
+  plugins: {}, // import Quasar plugins and add here
+  lang: quasarLang,
 })
 
-myApp.mount('#app')
+app.mount('#app')
