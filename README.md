@@ -8,12 +8,12 @@ IdeaForge is a magical Vue.js single-page application that uses AI models to hel
 
 ## Features 🌟
 
-- **The Crucible** 🧪: Where ideas are born! Input your thoughts or let our AI suggest some cool ideas.
-- **The Mold** 🧬: Shape your target audience with fun persona generation.
-- **The Forge** 🔥: Explore different directions for your idea. It's like choosing your own adventure!
-- **The Anvil** 🔨: Refine and perfect your ideas with AI-powered feedback.
-- **The Workshop** 🛠️: Create amazing social media content that will wow your friends!
-- **The Finishing Touch** 🎨: Put the final sparkle on your creation.
+- **The Crucible** 🧪: Where ideas are born! Input your thoughts or let our AI suggest some cool ideas. (Implemented!)
+- **The Mold** 🧬: Shape your target audience with fun persona generation. (Coming soon!)
+- **The Forge** 🔥: Explore different directions for your idea. It's like choosing your own adventure! (Coming soon!)
+- **The Anvil** 🔨: Refine and perfect your ideas with AI-powered feedback. (Coming soon!)
+- **The Workshop** 🛠️: Create amazing social media content that will wow your friends! (Coming soon!)
+- **The Finishing Touch** 🎨: Put the final sparkle on your creation. (Coming soon!)
 
 ## Technology Stack 🏗️
 
@@ -22,6 +22,12 @@ IdeaForge is a magical Vue.js single-page application that uses AI models to hel
 - **State Management**: Pinia (keeping track of all your brilliant ideas)
 - **API Integration**: Axios (for talking to our smart AI friends)
 - **AI Models**: Ollama LLaMA 3.1, OpenAI, Claude (the brains behind the magic)
+
+## Current Progress 🚧
+
+- The Crucible is up and running! You can now input your own ideas or get AI-generated suggestions.
+- We're working hard on bringing the other magical components to life.
+- Our code wizards are enhancing the UI and making sure everything works smoothly.
 
 ## Getting Started 🚀
 
