@@ -30,12 +30,6 @@
       />
     </div>
 
-    <!-- Display the current idea -->
-    <div v-if="currentIdea" class="q-mt-md q-pa-md bg-grey-2">
-      <h3>Your Awesome Idea:</h3>
-      <p>{{ currentIdea }}</p>
-    </div>
-
     <!-- Error display component -->
     <ErrorDisplay :error="error || ''" />
 
@@ -52,13 +46,14 @@ import { useIdeaForgeStore } from '../stores/ideaForge'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import ErrorDisplay from './ErrorDisplay.vue'
+import { generateText } from '../services/ollamaService'
 
 // Initialize the store and router
 const store = useIdeaForgeStore()
 const router = useRouter()
 
 // Destructure reactive properties from the store
-const { isLoading, error, currentIdea } = storeToRefs(store)
+const { isLoading, error } = storeToRefs(store)
 
 // Ref for user's input idea
 const userIdea = ref('')
@@ -74,12 +69,30 @@ const submitIdea = () => {
   navigateToNextStep()
 }
 
-// Function to generate idea using AI
-const generateIdea = async () => {
-  await store.generateIdeaWithAI()
-  if (!error.value) {
+// Function to generate idea using Ollama
+const generateIdeaWithOllama = async () => {
+  store.setLoading(true)
+  store.setError(null)
+  try {
+    // Prompt for Ollama to generate a creative idea
+    const prompt = "Generate a creative idea for a 5th-grade student's project:"
+    const generatedIdea = await generateText(prompt)
+    store.setOriginalIdea(generatedIdea)
     navigateToNextStep()
+  } catch (error) {
+    if (error instanceof Error) {
+      store.setError(error.message)
+    } else {
+      store.setError('An unexpected error occurred')
+    }
+  } finally {
+    store.setLoading(false)
   }
+}
+
+// Function to generate idea (now uses Ollama)
+const generateIdea = async () => {
+  await generateIdeaWithOllama()
 }
 
 // Function to navigate to the next step (TheMold)

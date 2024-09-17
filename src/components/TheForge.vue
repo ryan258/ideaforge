@@ -10,6 +10,16 @@
         <p>{{ currentIdea }}</p>
       </div>
   
+      <!-- Display generated personas -->
+      <div v-if="selectedPersonas.length > 0" class="q-my-md">
+        <h3>Target Personas:</h3>
+        <ul>
+          <li v-for="(persona, index) in selectedPersonas" :key="index">
+            {{ persona.name }} ({{ persona.age }}, {{ persona.occupation }})
+          </li>
+        </ul>
+      </div>
+  
       <!-- List of available directions -->
       <div v-if="availableDirections.length > 0" class="q-my-md">
         <h3>Possible Directions:</h3>
@@ -41,13 +51,13 @@
         />
       </div>
   
+      <!-- Error display component -->
+      <ErrorDisplay :error="error || ''" />
+  
       <!-- Loading spinner -->
       <q-inner-loading :showing="isLoading">
         <q-spinner-gears size="50px" color="primary" />
       </q-inner-loading>
-  
-      <!-- Error display component -->
-      <ErrorDisplay :error="error || ''" />
   
       <!-- Button to proceed to next step -->
       <div class="q-mt-md">
@@ -73,7 +83,7 @@
   const router = useRouter()
   
   // Destructure reactive properties from the store
-  const { currentIdea, isLoading, error, chosenDirection, availableDirections } = storeToRefs(store)
+  const { currentIdea, isLoading, error, chosenDirection, availableDirections, selectedPersonas } = storeToRefs(store)
   
   // Computed property to check if we can proceed to next step
   const canProceed = computed(() => !!chosenDirection.value)
