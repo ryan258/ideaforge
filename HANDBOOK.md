@@ -50,42 +50,62 @@ Welcome to the IdeaForge Educator's Handbook. This guide is designed to help tea
 
 - **Objective**: Develop critical thinking and decision-making skills.
 - **Activity**:
-  - (Note: This feature is coming soon. The following are suggested activities for when it's implemented.)
   - Have students explore different directions for their ideas.
   - Encourage peer feedback on different idea directions.
+- **How to use**:
+  - Click the "Generate Direction" button to create new potential directions for the idea.
+  - Review the generated directions with the class.
+  - Have students discuss the pros and cons of each direction.
+  - Select the most promising direction to move forward with.
 - **Discussion Points**:
   - What criteria can we use to evaluate different idea directions?
   - How do we balance creativity with practicality?
+  - How might different directions appeal to the personas we created?
 
-### 4. The Anvil: Refining Ideas
+### 4. The Anvil: Refining Ideas (Basic Structure Implemented)
 
 - **Objective**: Teach the importance of iteration and feedback in the creative process.
 - **Activity**:
-  - Guide students through the AI-powered refinement process.
-  - Conduct peer review sessions to provide additional feedback.
+  - (Note: Full functionality coming soon. The following are suggested activities based on the current basic structure.)
+  - Discuss the chosen direction and brainstorm ways to refine it.
+  - Use the current idea display to spark discussions about potential improvements.
+- **How to use**:
+  - Review the current idea displayed on the screen.
+  - Use the "Continue to The Workshop" button to move to the next phase when ready.
 - **Discussion Points**:
-  - How does feedback help improve our ideas?
-  - What's the difference between constructive criticism and negative feedback?
+  - How can we improve upon our chosen direction?
+  - What potential challenges might we face with this idea, and how can we address them?
 
-### 5. The Workshop: Content Creation
+### 5. The Workshop: Content Creation (Basic Structure Implemented)
 
 - **Objective**: Develop digital content creation skills.
 - **Activity**:
-  - Guide students in creating social media content based on their refined ideas.
-  - Discuss different content formats and their purposes.
+  - (Note: Full functionality coming soon. The following are suggested activities based on the current basic structure.)
+  - Brainstorm different types of social media content that could be created from the refined idea.
+  - Discuss the characteristics of effective social media content for different platforms.
+- **How to use**:
+  - Review any generated social media content ideas (feature coming soon).
+  - Use the "Generate Social Media Content" button to simulate content creation (full functionality coming soon).
 - **Discussion Points**:
   - How do different social media platforms affect content creation?
   - What makes content engaging or shareable?
+  - How can we adapt our idea for different social media formats (e.g., short video, image post, tweet)?
 
-### 6. The Finishing Touch: Final Refinement
+### 6. The Finishing Touch: Final Refinement (Basic Structure Implemented)
 
 - **Objective**: Teach the importance of polishing and presenting work professionally.
 - **Activity**:
-  - Have students make final adjustments to their content.
-  - Organize a class presentation where students showcase their projects.
+  - (Note: Full functionality coming soon. The following are suggested activities based on the current basic structure.)
+  - Discuss the importance of final edits and refinements in the creative process.
+  - Have students create a checklist for reviewing and polishing their work.
+- **How to use**:
+  - Review the final idea and any generated social media content.
+  - Use the "Make Final Adjustments" button to discuss potential last-minute changes (full functionality coming soon).
+  - Use the "Finish and Save" button to complete the process (full saving functionality coming soon).
 - **Discussion Points**:
   - How does presentation affect how an idea is received?
   - What have we learned about the journey from idea to final product?
+  - How might we continue to iterate and improve our idea even after this process?
 
 ## Integrating IdeaForge with Curriculum
 
@@ -105,7 +125,7 @@ Welcome to the IdeaForge Educator's Handbook. This guide is designed to help tea
 ## Adapting for Different Age Groups
 
 - **Younger Students (Grades 3-4)**: Focus more on the creative aspects and less on the technical details of content creation.
-- **Older Students (Grades 6-7)**: Dive deeper into audience analysis and the strategic aspects of content creation.
+- **Older Students (Grades 6-7)**: Dive deeper into audience analysis, strategic decision-making in The Forge, and the technical aspects of content creation.
 
 ## Assessment Ideas
 
@@ -124,6 +144,9 @@ Remember, the goal is not just to create content, but to foster a love for learn
 - AI Integration: Currently, the AI suggestions are simulated. Encourage students to think critically about the suggestions as if they were AI-generated.
 - Persona Detail: The current persona generation is basic. Have students expand on the generated personas with more detailed characteristics.
 - Progress Saving: The app doesn't yet save progress between sessions. Consider having students document their ideas and personas externally as they work.
+- Partial Implementation: The Anvil, Workshop, and Finishing Touch sections have basic structures implemented. Full functionality for these sections is coming soon. Use the current structures as starting points for class discussions and activities.
+- Social Media Content Generation: This feature is not yet fully implemented. Have students brainstorm and create content ideas manually based on their refined concepts.
+ 
 
 ## Feedback and Improvements
 
