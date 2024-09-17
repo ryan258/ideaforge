@@ -14,30 +14,43 @@ Welcome to the IdeaForge Educator's Handbook. This guide is designed to help tea
 
 ## Using IdeaForge in the Classroom
 
-### 1. The Crucible: Idea Generation
+### 1. The Crucible: Idea Generation (Implemented)
 
 - **Objective**: Stimulate creative thinking and idea generation.
-- **Activity**: 
+- **Activity**:
   - Have students brainstorm ideas individually or in small groups.
   - Use the AI suggestion feature to inspire students who are stuck.
-- **Discussion Points**: 
+- **How to use**:
+  - Students can enter their own ideas in the text area provided.
+  - If a student is struggling, they can click the "Generate New Idea" button for an AI-suggested idea.
+  - The submitted or generated idea will be displayed on the screen.
+- **Discussion Points**:
   - What makes an idea interesting or unique?
   - How can we combine different ideas to create something new?
+  - How does the AI-generated idea differ from your own? What aspects do you like or dislike?
 
 ### 2. The Mold: Understanding Audience
 
 - **Objective**: Teach students about target audiences and persona creation.
 - **Activity**:
-  - Guide students in creating personas for their target audience.
+  - Use the "Generate Persona" button to create AI-generated personas.
+  - Have students discuss and refine the generated personas.
   - Discuss how different audiences might react to the same idea.
+- **How to use**:
+  - Click the "Generate Persona" button to create a new persona.
+  - Review the generated personas with the class.
+  - Use the delete button to remove any personas that don't fit the project.
+  - Proceed to the next step once you have a set of suitable personas.
 - **Discussion Points**:
   - Why is understanding your audience important?
   - How might you adjust your idea for different age groups or interests?
+  - What additional characteristics would you add to these personas to make them more realistic or relevant to your idea?
 
 ### 3. The Forge: Exploring Directions
 
 - **Objective**: Develop critical thinking and decision-making skills.
 - **Activity**:
+  - (Note: This feature is coming soon. The following are suggested activities for when it's implemented.)
   - Have students explore different directions for their ideas.
   - Encourage peer feedback on different idea directions.
 - **Discussion Points**:
@@ -105,3 +118,13 @@ Welcome to the IdeaForge Educator's Handbook. This guide is designed to help tea
 IdeaForge is more than just a tool; it's a gateway to teaching valuable 21st-century skills. By guiding students through the process of idea generation, refinement, and content creation, we're preparing them for a future where creativity and digital literacy are paramount.
 
 Remember, the goal is not just to create content, but to foster a love for learning, creating, and sharing ideas. Enjoy the journey of discovery with your students!
+
+## Current Limitations and Workarounds
+
+- AI Integration: Currently, the AI suggestions are simulated. Encourage students to think critically about the suggestions as if they were AI-generated.
+- Persona Detail: The current persona generation is basic. Have students expand on the generated personas with more detailed characteristics.
+- Progress Saving: The app doesn't yet save progress between sessions. Consider having students document their ideas and personas externally as they work.
+
+## Feedback and Improvements
+
+As you use IdeaForge in your classroom, we encourage you to note any challenges, suggestions, or success stories. Your feedback is invaluable in helping us improve the tool for educational use. Please share your experiences and ideas with us at feedback@ideaforge.com.

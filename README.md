@@ -9,7 +9,7 @@ IdeaForge is a magical Vue.js single-page application that uses AI models to hel
 ## Features 🌟
 
 - **The Crucible** 🧪: Where ideas are born! Input your thoughts or let our AI suggest some cool ideas. (Implemented!)
-- **The Mold** 🧬: Shape your target audience with fun persona generation. (Coming soon!)
+- **The Mold** 🧬: Shape your target audience with fun persona generation. (Implemented)
 - **The Forge** 🔥: Explore different directions for your idea. It's like choosing your own adventure! (Coming soon!)
 - **The Anvil** 🔨: Refine and perfect your ideas with AI-powered feedback. (Coming soon!)
 - **The Workshop** 🛠️: Create amazing social media content that will wow your friends! (Coming soon!)
@@ -26,8 +26,11 @@ IdeaForge is a magical Vue.js single-page application that uses AI models to hel
 ## Current Progress 🚧
 
 - The Crucible is up and running! You can now input your own ideas or get AI-generated suggestions.
-- We're working hard on bringing the other magical components to life.
-- Our code wizards are enhancing the UI and making sure everything works smoothly.
+- The Mold is now operational! Generate fun personas for your target audience.
+- We've implemented a Pinia store for smooth state management.
+- Vue Router is set up for seamless navigation between components.
+- Basic error handling and user feedback mechanisms are in place.
+- We're currently working on The Forge to explore different idea directions.
 
 ## Getting Started 🚀
 
@@ -41,6 +44,15 @@ IdeaForge is a magical Vue.js single-page application that uses AI models to hel
    npm run dev
    ```
 4. Open your browser and visit `http://localhost:5173` (or whatever port your cauldron tells you)
+
+## Usage 🖥️
+
+1. Start at The Crucible: Enter your own idea or generate one with AI.
+2. Move to The Mold: Create personas for your target audience.
+3. (Coming Soon) Explore idea directions in The Forge.
+4. (Coming Soon) Refine your idea in The Anvil.
+5. (Coming Soon) Generate social media content in The Workshop.
+6. (Coming Soon) Add final touches in The Finishing Touch.
 
 ## For the Grown-ups (Teachers and Parents) 👩‍🏫👨‍🏫
 
@@ -61,6 +73,11 @@ We love new ideas! If you want to help make IdeaForge even more awesome:
 ## License 📜
 
 IdeaForge is open source and available under the MIT License. See the LICENSE file for more info.
+
+## Known Issues 🐛
+
+- AI generation is currently simulated. Real AI integration coming soon!
+- Progress is not saved between sessions. Remember to document your ideas externally.
 
 ## Contact 📬
 
