@@ -1,32 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LandingPage from '../views/LandingPage.vue'
-import Dashboard from '../views/Dashboard.vue'
-import MainView from '../views/MainView.vue'
-import Settings from '../views/Settings.vue'
+import TheCrucible from '../components/TheCrucible.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'landing',
+      name: 'home',
       component: LandingPage
     },
     {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: Dashboard
-    },
-    {
-      path: '/forge',
-      name: 'forge',
-      component: MainView
-    },
-    {
-      path: '/settings',
-      name: 'settings',
-      component: Settings
+      path: '/crucible',
+      name: 'crucible',
+      component: TheCrucible
     }
+    // Add more routes as needed
   ]
 })
 

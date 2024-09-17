@@ -1,22 +1,17 @@
+<!-- src/components/ErrorDisplay.vue -->
+<script setup lang="ts">
+defineProps<{ error: string }>()
+</script>
+
 <template>
-<q-banner v-if="error" rounded class="bg-negative text-white">
-    <template v-slot:avatar>
-    <q-icon name="error" color="white" />
-    </template>
+  <div v-if="error" class="error-display q-mt-md">
     {{ error }}
-</q-banner>
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-name: 'ErrorDisplay',
-props: {
-    error: {
-    type: String,
-    default: ''
-    }
+<style scoped>
+.error-display {
+  color: red;
+  font-weight: bold;
 }
-})
-</script>
+</style>

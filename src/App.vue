@@ -1,3 +1,4 @@
+<!-- src/App.vue -->
 <template>
   <q-layout view="hHh lpR fFf">
     <q-header elevated class="bg-primary text-white">
@@ -7,15 +8,13 @@
     </q-header>
 
     <q-page-container>
-      <router-view />
+      <q-page class="q-pa-md">
+        <TheCrucible />
+      </q-page>
     </q-page-container>
   </q-layout>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'App'
-})
+<script setup lang="ts">
+import TheCrucible from './components/TheCrucible.vue'
 </script>
