@@ -43,19 +43,16 @@ We have successfully implemented the core functionality for The Crucible, The Mo
 ## Upcoming Features
 
 ### The Anvil
-- [ ] Create TheAnvil.vue component
 - [ ] Implement idea refinement functionality
 - [ ] Integrate AI for suggestion generation
 - [ ] Add user interaction for idea iteration
 
 ### The Workshop
-- [ ] Create TheWorkshop.vue component
 - [ ] Implement social media content generation
 - [ ] Display and manage generated content ideas
 - [ ] Add customization options for different platforms
 
 ### The Finishing Touch
-- [ ] Create TheFinishingTouch.vue component
 - [ ] Implement final idea polishing functionality
 - [ ] Add export options for completed ideas
 

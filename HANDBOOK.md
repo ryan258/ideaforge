@@ -139,13 +139,15 @@ IdeaForge is more than just a tool; it's a gateway to teaching valuable 21st-cen
 
 Remember, the goal is not just to create content, but to foster a love for learning, creating, and sharing ideas. Enjoy the journey of discovery with your students!
 
+
 ## Current Limitations and Workarounds
 
-- AI Integration: Currently, the AI suggestions are simulated. Encourage students to think critically about the suggestions as if they were AI-generated.
-- Persona Detail: The current persona generation is basic. Have students expand on the generated personas with more detailed characteristics.
-- Progress Saving: The app doesn't yet save progress between sessions. Consider having students document their ideas and personas externally as they work.
+- AI Integration: The AI suggestions are now powered by the Ollama service. Encourage students to think critically about the AI-generated content and discuss how it aligns with their own ideas.
+- Persona Detail: While persona generation has improved, consider having students expand on the generated personas with more detailed characteristics based on their own experiences and imagination.
+- Progress Saving: The app doesn't yet save progress between sessions. Consider having students document their ideas, personas, and chosen directions externally as they work.
 - Partial Implementation: The Anvil, Workshop, and Finishing Touch sections have basic structures implemented. Full functionality for these sections is coming soon. Use the current structures as starting points for class discussions and activities.
 - Social Media Content Generation: This feature is not yet fully implemented. Have students brainstorm and create content ideas manually based on their refined concepts.
+
  
 
 ## Feedback and Improvements

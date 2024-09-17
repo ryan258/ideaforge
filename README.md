@@ -8,7 +8,9 @@ IdeaForge is a magical Vue.js single-page application that uses AI models to hel
 
 ## Features 🌟
 
-- **The Crucible** 🧪: Where ideas are born! Input your thoughts or let our AI suggest some cool ideas. (Implemented!)
+## Features 🌟
+
+- **The Crucible** 🧪: Where ideas are born! Input your thoughts or let our AI suggest some cool ideas. (Implemented)
 - **The Mold** 🧬: Shape your target audience with fun persona generation. (Implemented)
 - **The Forge** 🔥: Explore different directions for your idea. It's like choosing your own adventure! (Implemented)
 - **The Anvil** 🔨: Refine and perfect your ideas with AI-powered feedback. (Basic structure implemented)
@@ -34,6 +36,7 @@ IdeaForge is a magical Vue.js single-page application that uses AI models to hel
 - Basic structures for The Anvil, The Workshop, and The Finishing Touch are in place.
 - We've implemented consistent error handling across all components.
 - All components now use a shared ErrorDisplay component for uniform error presentation.
+- Ollama AI service integration is now in place for idea, persona, and direction generation.
 
 ## Getting Started 🚀
 
