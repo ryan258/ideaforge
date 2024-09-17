@@ -21,6 +21,9 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
     // Chosen direction for idea development
     chosenDirection: '',
 
+    // Available directions for the idea
+    availableDirections: [] as string[],
+
     // Current iteration of the idea (evolves through the process)
     currentIteration: '',
 
@@ -90,6 +93,11 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
       this.chosenDirection = direction
     },
 
+    // Add a new available direction
+    addAvailableDirection(direction: string) {
+      this.availableDirections.push(direction)
+    },
+
     // Update the current iteration of the idea
     updateCurrentIteration(iteration: string) {
       this.currentIteration = iteration
@@ -146,6 +154,21 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
         this.addPersona(`AI-generated persona ${this.selectedPersonas.length + 1}`)
       } catch (error) {
         this.setError('Failed to generate persona. Please try again.')
+      } finally {
+        this.setLoading(false)
+      }
+    },
+
+    // Async action to generate a direction using AI
+    async generateDirectionWithAI() {
+      this.setLoading(true)
+      this.setError(null)
+      try {
+        // Simulating an API call for now
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+        this.addAvailableDirection(`AI-generated direction ${this.availableDirections.length + 1}`)
+      } catch (error) {
+        this.setError('Failed to generate direction. Please try again.')
       } finally {
         this.setLoading(false)
       }
