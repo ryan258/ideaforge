@@ -2,6 +2,7 @@
 
 import { defineStore } from 'pinia'
 import { AIModelFactory } from '../utils/aiModelFactory'
+import { aiPrompts } from '../utils/aiPrompts'
 
 // Define the structure for a Persona
 interface Persona {
@@ -166,7 +167,7 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
 
     async generateIdeaWithAI() {
       try {
-        const prompt = "Generate a creative idea for a 5th-grade student's project:"
+        const prompt = aiPrompts.generateIdea
         const generatedIdea = await this.generateTextWithAI(prompt)
         this.setOriginalIdea(generatedIdea)
       } catch (error) {
@@ -176,16 +177,8 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
 
     async generatePersonaWithAI() {
       try {
-        const prompt = `Generate a detailed persona who would be excited about this idea: "${this.currentIdea}". 
-        Respond ONLY with a JSON object containing these fields:
-        {
-          "name": "Character Name",
-          "age": 25,
-          "occupation": "Job Title",
-          "interests": ["Interest 1", "Interest 2", "Interest 3"],
-          "reasonForInterest": "Brief explanation of why they find this idea interesting"
-        }
-        Do not include any text outside the JSON object.`
+        this.setLoading(true)
+        const prompt = aiPrompts.generatePersona(this.currentIdea)
 
         const generatedPersonaText = await this.generateTextWithAI(prompt)
         let generatedPersona
@@ -213,14 +206,7 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
     async generateDirectionWithAI() {
       try {
         const personasContext = this.getPersonasAsString()
-        const prompt = `Given the original idea: "${this.currentIdea}" 
-        and the following personas:\n\n${personasContext}\n\n
-        Generate a creative direction for developing this idea that would appeal to these personas. 
-        Respond with a JSON object in this format:
-        {
-          "direction": "Brief description of the direction",
-          "rationale": "Explanation of why this direction would appeal to the personas"
-        }`
+        const prompt = aiPrompts.generateDirection(this.currentIdea, personasContext)
     
         const generatedDirectionText = await this.generateTextWithAI(prompt)
         
@@ -255,7 +241,7 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
 
     async refinedIdeaWithAI(refinementNotes: string) {
       try {
-        const prompt = `Refine this idea: "${this.currentIdea}" with these changes: "${refinementNotes}"`
+        const prompt = aiPrompts.refineIdea(this.currentIdea, refinementNotes)
         const refinedIdea = await this.generateTextWithAI(prompt)
         this.updateCurrentIdea(refinedIdea.trim())
       } catch (error) {
@@ -266,13 +252,35 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
 
     async generateSocialMediaContentWithAI(platform: string) {
       try {
-        const prompt = `Generate a creative ${platform} post for this idea: "${this.currentIdea}". 
-                        The post should be engaging and suitable for a ${platform} audience.`
+        const prompt = aiPrompts.generateSocialMediaContent(this.currentIdea, platform)
         const content = await this.generateTextWithAI(prompt)
         this.addSocialMediaIdea(content.trim())
       } catch (error) {
         console.error('Failed to generate social media content:', error)
         this.setError('Failed to generate social media content. Please try again.')
+      }
+    },
+
+    async generateAIFeedbackWithAI() {
+      try {
+        const prompt = aiPrompts.generateAIFeedback(this.currentIdea)
+        const feedback = await this.generateTextWithAI(prompt)
+        return feedback.trim()
+      } catch (error) {
+        console.error('Failed to generate AI feedback:', error)
+        this.setError('Failed to generate AI feedback. Please try again.')
+      }
+    },
+
+    async generatePersonaFeedbackWithAI(persona: Persona) {
+      try {
+        const personaString = `Name: ${persona.name}, Age: ${persona.age}, Occupation: ${persona.occupation}, Interests: ${persona.interests.join(', ')}`
+        const prompt = aiPrompts.generatePersonaFeedback(personaString, this.currentIdea)
+        const feedback = await this.generateTextWithAI(prompt)
+        return feedback.trim()
+      } catch (error) {
+        console.error('Failed to generate persona feedback:', error)
+        this.setError('Failed to generate persona feedback. Please try again.')
       }
     },
 
