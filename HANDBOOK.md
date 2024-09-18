@@ -146,12 +146,18 @@ Remember, the goal is not just to create content, but to foster a love for learn
 
 ## Current Limitations and Workarounds
 
-- AI Integration: The AI suggestions are now powered by the Ollama service. Encourage students to think critically about the AI-generated content and discuss how it aligns with their own ideas.
+- AI Integration: The AI suggestions are now powered by multiple services (Ollama, OpenAI, Claude). Encourage students to think critically about the AI-generated content and discuss how it aligns with their own ideas.
 - Persona Detail: While persona generation has improved, consider having students expand on the generated personas with more detailed characteristics based on their own experiences and imagination.
 - Progress Saving: The app doesn't yet save progress between sessions. Consider having students document their ideas, personas, and chosen directions externally as they work.
-- Partial Implementation: The Workshop and Finishing Touch sections have basic structures implemented. Full functionality for these sections is coming soon. Use the current structures as starting points for class discussions and activities.
-- Social Media Content Generation: This feature is not yet fully implemented. Have students brainstorm and create content ideas manually based on their refined concepts.
+- The Workshop and Finishing Touch: These sections have basic structures implemented. Use these as starting points for class discussions and activities, while explaining that full functionality is coming soon.
+- Social Media Content Generation: This feature has a basic structure implemented. Have students brainstorm and create content ideas manually based on their refined concepts, while explaining that more AI-assisted functionality is coming soon.
 
+## New Features and Improvements
+
+- Multiple AI Models: Students can now choose between different AI models (Ollama, OpenAI, Claude) for idea generation and refinement. This can lead to interesting discussions about the differences in AI-generated content from various sources.
+- Improved Error Handling: The application now provides clearer feedback when errors occur, helping students understand and troubleshoot issues more easily.
+- Markdown Rendering: AI-generated content is now rendered with markdown formatting, improving readability and allowing for more structured content.
+ 
  
 
 ## Feedback and Improvements

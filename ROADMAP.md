@@ -52,19 +52,20 @@ We have successfully implemented the core functionality for The Crucible, The Mo
 ## Upcoming Features
 
 ### The Workshop
-- [ ] Implement social media content generation
-- [ ] Display and manage generated content ideas
+- [x] Implement basic structure for social media content generation
+- [ ] Fully implement social media content generation functionality
+- [ ] Enhance display and management of generated content ideas
 - [ ] Add customization options for different platforms
 - [ ] Integrate AI for platform-specific content suggestions
 
 ### The Finishing Touch
-- [ ] Implement final idea polishing functionality
-- [ ] Add export options for completed ideas
+- [x] Implement basic structure for final idea polishing
+- [ ] Fully implement final idea polishing functionality
 
 ### Enhanced AI Integration
-- [ ] Improve prompt engineering for more accurate results
+- [x] Implement support for multiple AI models (Ollama, OpenAI, Claude)
+- [ ] Refine prompt engineering for more accurate results
 - [ ] Implement fallback options for AI service unavailability
-- [ ] Add support for multiple AI models (OpenAI, Claude)
 
 ### User Experience Improvements
 - [ ] Enhance accessibility features across all components

@@ -8,8 +8,6 @@ IdeaForge is a magical Vue.js single-page application that uses AI models to hel
 
 ## Features 🌟
 
-## Features 🌟
-
 - **The Crucible** 🧪: Where ideas are born! Input your thoughts or let our AI suggest some cool ideas. (Implemented)
 - **The Mold** 🧬: Shape your target audience with fun persona generation. (Implemented)
 - **The Forge** 🔥: Explore different directions for your idea. It's like choosing your own adventure! (Implemented)
@@ -17,42 +15,34 @@ IdeaForge is a magical Vue.js single-page application that uses AI models to hel
 - **The Workshop** 🛠️: Create amazing social media content that will wow your friends! (Basic structure implemented)
 - **The Finishing Touch** 🎨: Put the final sparkle on your creation. (Basic structure implemented)
 
+Note: We now support multiple AI models: Ollama, OpenAI, and Claude!
+
 ## Technology Stack 🏗️
 
 - **Frontend**: Vue.js 3 with TypeScript (because types are cool!)
 - **UI Framework**: Quasar (for that awesome look and feel)
 - **State Management**: Pinia (keeping track of all your brilliant ideas)
 - **API Integration**: Axios (for talking to our smart AI friends)
-- **AI Models**: Ollama LLaMA 3.1, OpenAI, Claude (the brains behind the magic)
+- **AI Models**: Ollama, OpenAI, Claude (the brains behind the magic)
 
 ## Current Progress 🚧
 
 - The Crucible is up and running! You can now input your own ideas or get AI-generated suggestions.
 - The Mold is now operational! Generate fun personas for your target audience.
-- We've implemented a Pinia store for smooth state management.
-- Vue Router is set up for seamless navigation between components.
-- Basic error handling and user feedback mechanisms are in place.
-- The Forge is fully operational! Generate and select idea directions.
-- The Anvil is now implemented with AI-powered refinement and persona feedback.
+- The Forge is fully implemented, allowing you to explore and select idea directions.
+- The Anvil is now functional with AI-powered refinement and persona feedback.
 - Basic structures for The Workshop and The Finishing Touch are in place.
 - We've implemented consistent error handling across all components.
-- All components now use a shared ErrorDisplay component for uniform error presentation.
-- Ollama AI service integration is now in place for idea, persona, and direction generation.
 - Markdown rendering is implemented for better readability of AI-generated content.
-
+- Multiple AI model support (Ollama, OpenAI, Claude) is now integrated.
 
 ## Getting Started 🚀
 
-1. Clone this repository (it's like making a copy of a spellbook)
-2. Install the magic ingredients (dependencies):
-   ```
-   npm install
-   ```
-3. Start the development cauldron (server):
-   ```
-   npm run dev
-   ```
-4. Open your browser and visit `http://localhost:5173` (or whatever port your cauldron tells you)
+1. Clone this repository
+2. Install dependencies: `npm install`
+3. Set up your environment variables in a `.env` file (see `.env.example` for required variables)
+4. Start the development server: `npm run dev`
+5. Open your browser and visit `http://localhost:5173` (or whatever port Vite tells you)
 
 ## Usage 🖥️
 
