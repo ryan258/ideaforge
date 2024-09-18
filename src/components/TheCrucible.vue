@@ -10,6 +10,7 @@
       label="Enter your awesome idea"
       type="textarea"
       rows="4"
+      :disable="isLoading"
     />
 
     <div class="q-mt-md">
@@ -18,20 +19,36 @@
         color="primary"
         label="Submit My Idea"
         @click="submitIdea"
-        :disabled="isLoading"
+        :disable="isLoading"
       />
       <!-- Button to generate AI idea -->
       <q-btn
         color="secondary"
         label="Generate New Idea"
         @click="generateIdea"
-        :disabled="isLoading"
+        :disable="isLoading"
         class="q-ml-sm"
       />
     </div>
 
+    <!-- AI Model Selection -->
+    <div class="q-mt-md">
+      <q-select
+        v-model="selectedAIModel"
+        :options="aiModelOptions"
+        label="Select AI Model"
+        :disable="isLoading"
+      />
+    </div>
+
+    <!-- Display the generated or submitted idea -->
+    <div v-if="currentIdea" class="q-mt-md">
+      <h3>Your Awesome Idea:</h3>
+      <p>{{ currentIdea }}</p>
+    </div>
+
     <!-- Error display component -->
-    <ErrorDisplay :error="error || ''" />
+    <ErrorDisplay :error="error" />
 
     <!-- Loading spinner -->
     <q-inner-loading :showing="isLoading">
@@ -41,22 +58,30 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useIdeaForgeStore } from '../stores/ideaForge'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import ErrorDisplay from './ErrorDisplay.vue'
-import { generateText } from '../services/ollamaService'
 
 // Initialize the store and router
 const store = useIdeaForgeStore()
 const router = useRouter()
 
 // Destructure reactive properties from the store
-const { isLoading, error } = storeToRefs(store)
+const { isLoading, error, currentIdea } = storeToRefs(store)
 
 // Ref for user's input idea
 const userIdea = ref('')
+
+// AI model selection
+const selectedAIModel = ref(store.userPreferences.preferredAIModel)
+const aiModelOptions = ['ollama', 'openai', 'claude']
+
+// Watch for changes in selected AI model
+watch(selectedAIModel, (newModel) => {
+  store.setPreferredAIModel(newModel as 'ollama' | 'openai' | 'claude')
+})
 
 // Function to submit user's idea
 const submitIdea = () => {
@@ -69,30 +94,17 @@ const submitIdea = () => {
   navigateToNextStep()
 }
 
-// Function to generate idea using Ollama
-const generateIdeaWithOllama = async () => {
-  store.setLoading(true)
-  store.setError(null)
-  try {
-    // Prompt for Ollama to generate a creative idea
-    const prompt = "Generate a creative idea for a 5th-grade student's project:"
-    const generatedIdea = await generateText(prompt)
-    store.setOriginalIdea(generatedIdea)
-    navigateToNextStep()
-  } catch (error) {
-    if (error instanceof Error) {
-      store.setError(error.message)
-    } else {
-      store.setError('An unexpected error occurred')
-    }
-  } finally {
-    store.setLoading(false)
-  }
-}
-
-// Function to generate idea (now uses Ollama)
+// Function to generate idea using the selected AI model
 const generateIdea = async () => {
-  await generateIdeaWithOllama()
+  try {
+    await store.generateIdeaWithAI()
+    if (store.originalIdea) {
+      navigateToNextStep()
+    }
+  } catch (error) {
+    console.error('Error generating idea:', error)
+    // Error is already set in the store, so we don't need to set it here
+  }
 }
 
 // Function to navigate to the next step (TheMold)
@@ -102,14 +114,27 @@ const navigateToNextStep = () => {
   router.push({ name: 'mold' })
 }
 
-// Debug log
-console.log('TheCrucible component loaded')
+// Computed property to determine if we can proceed
+// const canProceed = computed(() => !!store.originalIdea && !isLoading.value)
 </script>
 
 <style scoped>
 .crucible {
   max-width: 600px;
   margin: 0 auto;
-  padding: 20px;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.q-btn {
+  margin-top: 1rem;
 }
 </style>

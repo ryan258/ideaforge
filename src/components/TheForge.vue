@@ -64,15 +64,11 @@
         :disable="!canProceedToAnvil" 
       />
     </div>
-    <!-- Debug info -->
-    <div class="q-mt-md text-caption">
-      Debug: Chosen Direction: {{ chosenDirection }}
-    </div>
   </div>
 </template>
-  
+
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useIdeaForgeStore } from '../stores/ideaForge'
@@ -88,21 +84,21 @@ const {
   isLoading, 
   error, 
   chosenDirection, 
-  chosenDirectionRationale, 
   availableDirections 
 } = storeToRefs(store)
 
 // Computed property to check if we can proceed to next step
-const canProceed = computed(() => !!chosenDirection.value && availableDirections.value.length > 0)
-
-// New computed property to determine if the "Continue to The Anvil" button should be disabled
 const canProceedToAnvil = computed(() => {
-  return store.hasChosenDirection && !error.value
+  return !!chosenDirection.value && !error.value
 })
 
 // Function to generate a new direction
 const generateDirection = async () => {
-  await store.generateDirectionWithAI()
+  try {
+    await store.generateDirectionWithAI()
+  } catch (error) {
+    console.error('Failed to generate direction:', error)
+  }
 }
 
 // Function to select a direction
@@ -120,17 +116,39 @@ const proceedToAnvil = () => {
     store.setError('Please select a direction before continuing.')
   }
 }
-
-// Debug: Watch for changes in chosenDirection
-watch(chosenDirection, (newVal) => {
-  console.log('chosenDirection changed:', newVal)
-})
-
 </script>
-  
+
 <style scoped>
 .forge {
   max-width: 600px;
   margin: 0 auto;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.q-btn {
+  margin-top: 1rem;
+}
+
+.q-list {
+  margin-top: 1rem;
+}
+
+.q-card {
+  margin-bottom: 1rem;
 }
 </style>

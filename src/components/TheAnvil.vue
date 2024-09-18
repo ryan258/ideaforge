@@ -22,7 +22,7 @@
       <h3>Cool Ideas from our Robot Friend:</h3>
       <ul>
         <li v-for="(suggestion, index) in aiSuggestions" :key="index">
-          <div v-html="renderMarkdown(suggestion)"></div>
+          <div v-html="renderedSuggestions[index]"></div>
         </li>
       </ul>
     </div>
@@ -40,7 +40,7 @@
           <q-item-section>
             <q-item-label>{{ feedback.persona.name }} says:</q-item-label>
             <q-item-label caption>
-              <div v-html="renderMarkdown(feedback.suggestion)"></div>
+              <div v-html="renderedFeedback[index]"></div>
             </q-item-label>
           </q-item-section>
         </q-item>
@@ -84,12 +84,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useIdeaForgeStore } from '../stores/ideaForge'
 import ErrorDisplay from './ErrorDisplay.vue'
-import { generateText } from '../services/ollamaService'
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
 
@@ -104,32 +103,35 @@ const { currentIdea, isLoading, error, selectedPersonas } = storeToRefs(store)
 const aiSuggestions = ref<string[]>([])
 const personaFeedback = ref<Array<{ persona: any; suggestion: string }>>([])
 const userRefinement = ref('')
+const renderedIdea = ref('')
+const renderedSuggestions = ref<string[]>([])
+const renderedFeedback = ref<string[]>([])
 
 // Computed property to check if we can proceed
 const canProceed = computed(() => !!currentIdea.value && !isLoading.value && !error.value)
 
 // Function to render markdown safely
-function renderMarkdown(text: string): string {
+async function renderMarkdown(text: string): Promise<string> {
   if (typeof text !== 'string') return ''
-  const rawHtml = marked(text || '')
+  const rawHtml = await marked(text || '')
   return DOMPurify.sanitize(rawHtml)
 }
 
-// Computed property to render the current idea as markdown
-const renderedIdea = computed(() => {
-  if (typeof currentIdea.value === 'string') {
-    return renderMarkdown(currentIdea.value)
+// Watch for changes in currentIdea and render markdown
+watch(currentIdea, async () => {
+  if (currentIdea.value) {
+    renderedIdea.value = await renderMarkdown(currentIdea.value)
   }
-  return '' // Return empty string if currentIdea is not a string
-})
+}, { immediate: true })
 
 // Function to get AI suggestions
 const getAISuggestions = async () => {
   try {
     store.setLoading(true)
     const prompt = `Give 3 cool suggestions to make this idea even better: "${currentIdea.value}"`
-    const response = await generateText(prompt)
+    const response = await store.generateTextWithAI(prompt)
     aiSuggestions.value = response.split('\n').filter(suggestion => suggestion.trim() !== '')
+    renderedSuggestions.value = await Promise.all(aiSuggestions.value.map(renderMarkdown))
   } catch (error) {
     store.setError('Oops! Our robot friend is taking a nap. Try again later!')
   } finally {
@@ -146,9 +148,10 @@ const getPersonaFeedback = async () => {
       const prompt = `As ${persona.name}, a ${persona.age}-year-old ${persona.occupation} interested in ${persona.interests.join(', ')}, 
         give one specific suggestion to improve this idea: "${currentIdea.value}". 
         Your suggestion should reflect your age, occupation, and interests.`
-      const suggestion = await generateText(prompt)
-      personaFeedback.value.push({ persona, suggestion })
+      const suggestion = await store.generateTextWithAI(prompt)
+      personaFeedback.value.push({ persona, suggestion: suggestion.trim() })
     }
+    renderedFeedback.value = await Promise.all(personaFeedback.value.map(fb => renderMarkdown(fb.suggestion)))
   } catch (error) {
     store.setError('Uh-oh! Our friendly helpers are busy. Let\'s try again later!')
   } finally {
@@ -165,10 +168,10 @@ const refineIdea = async () => {
 
   try {
     store.setLoading(true)
-    const refinedIdea = await generateText(
+    const refinedIdea = await store.generateTextWithAI(
       `Refine this idea: "${currentIdea.value}" with these changes: "${userRefinement.value}"`
     )
-    store.updateCurrentIteration(refinedIdea)
+    store.updateCurrentIdea(refinedIdea.trim())
     userRefinement.value = ''
     await Promise.all([getAISuggestions(), getPersonaFeedback()])
   } catch (error) {
@@ -198,6 +201,26 @@ onMounted(async () => {
 .anvil {
   max-width: 600px;
   margin: 0 auto;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.q-btn {
+  margin-top: 1rem;
 }
 
 /* Add some basic styling for rendered markdown */

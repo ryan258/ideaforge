@@ -1,6 +1,7 @@
 // src/stores/ideaForge.ts
+
 import { defineStore } from 'pinia'
-import { generateText } from '../services/ollamaService'
+import { AIModelFactory } from '../utils/aiModelFactory'
 
 // Define the structure for a Persona
 interface Persona {
@@ -21,11 +22,11 @@ interface Direction {
 interface IdeaForgeState {
   currentStep: 'crucible' | 'mold' | 'forge' | 'anvil' | 'workshop' | 'finishingTouch'
   originalIdea: string
+  currentIdea: string
   selectedPersonas: Persona[]
   chosenDirection: string
   chosenDirectionRationale: string
   availableDirections: Direction[]
-  currentIteration: string
   socialMediaIdeas: string[]
   userPreferences: {
     preferredAIModel: 'ollama' | 'openai' | 'claude'
@@ -38,11 +39,11 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
   state: (): IdeaForgeState => ({
     currentStep: 'crucible',
     originalIdea: '',
+    currentIdea: '',
     selectedPersonas: [],
     chosenDirection: '',
     chosenDirectionRationale: '',
     availableDirections: [],
-    currentIteration: '',
     socialMediaIdeas: [],
     userPreferences: {
       preferredAIModel: 'ollama'
@@ -53,10 +54,6 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
 
   getters: {
     hasChosenDirection: (state) => !!state.chosenDirection,
-    // Get the current idea (either the original or the latest iteration)
-    currentIdea: (state): string => state.currentIteration || state.originalIdea,
-
-    // Check if we can move to the next step
     canProceedToNextStep: (state): boolean => {
       switch (state.currentStep) {
         case 'crucible':
@@ -66,24 +63,29 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
         case 'forge':
           return !!state.chosenDirection
         case 'anvil':
-          return !!state.currentIteration
+          return !!state.currentIdea
         case 'workshop':
           return state.socialMediaIdeas.length > 0
+        case 'finishingTouch':
+          return true // Always allow proceeding from the final step
         default:
-          return true
+          return false
       }
     }
   },
 
   actions: {
-    // Set the current step in the process
     setCurrentStep(step: IdeaForgeState['currentStep']) {
       this.currentStep = step
     },
 
-    // Set the original idea
     setOriginalIdea(idea: string) {
       this.originalIdea = idea
+      this.currentIdea = idea // Initialize currentIdea with originalIdea
+    },
+
+    updateCurrentIdea(idea: string) {
+      this.currentIdea = idea
     },
 
     addPersona(persona: Persona) {
@@ -94,59 +96,47 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
         this.selectedPersonas.push(persona)
       } else {
         console.warn('Duplicate persona detected:', persona.name)
-        // Optionally, you can set an error state here to inform the user
-        // this.setError('A similar persona already exists.')
+        this.setError('A similar persona already exists.')
       }
     },
 
-    // Remove a persona by index
     removePersona(index: number) {
       this.selectedPersonas.splice(index, 1)
     },
 
-    // Set the chosen direction for the idea
     setChosenDirection(direction: string, rationale: string) {
       this.chosenDirection = direction
       this.chosenDirectionRationale = rationale
-      console.log('Direction set:', this.chosenDirection) // Debug log
     },
 
-    // Add a new available direction
     addAvailableDirection(direction: string, rationale: string) {
       this.availableDirections.push({ direction, rationale })
     },
 
-    // Update the current iteration of the idea
-    updateCurrentIteration(iteration: string) {
-      this.currentIteration = iteration
-    },
-
-    // Add a social media content idea
     addSocialMediaIdea(idea: string) {
       this.socialMediaIdeas.push(idea)
     },
 
-    // Set user preference for AI model
+    removeSocialMediaIdea(index: number) {
+      this.socialMediaIdeas.splice(index, 1)
+    },
+
     setPreferredAIModel(model: IdeaForgeState['userPreferences']['preferredAIModel']) {
       this.userPreferences.preferredAIModel = model
     },
 
-    // Set error state
     setError(error: string | null) {
       this.error = error
     },
 
-    // Set loading state
     setLoading(isLoading: boolean) {
       this.isLoading = isLoading
     },
 
-    // Reset the entire store (useful when starting a new idea process)
     resetStore() {
       this.$reset()
     },
 
-    // Get all personas as a formatted string
     getPersonasAsString(): string {
       return this.selectedPersonas.map(persona => 
         `Name: ${persona.name}, Age: ${persona.age}, Occupation: ${persona.occupation}, 
@@ -155,27 +145,38 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
       ).join('\n\n')
     },
 
-    // Async action to generate an idea using AI
-    async generateIdeaWithAI() {
+    async generateTextWithAI(prompt: string): Promise<string> {
       this.setLoading(true)
       this.setError(null)
       try {
-        const prompt = "Generate a creative idea for a 5th-grade student's project:"
-        const generatedIdea = await generateText(prompt)
-        this.setOriginalIdea(generatedIdea)
+        const model = AIModelFactory.getModel(this.userPreferences.preferredAIModel)
+        const generatedText = await model.generate(prompt)
+        return generatedText
       } catch (error) {
-        this.setError('Failed to generate idea. Please try again.')
+        if (error instanceof Error) {
+          this.setError(error.message)
+        } else {
+          this.setError('An unexpected error occurred')
+        }
+        throw error
       } finally {
         this.setLoading(false)
       }
     },
 
-    // Async action to generate a persona using AI
-    async generatePersonaWithAI() {
-      this.setLoading(true)
-      this.setError(null)
+    async generateIdeaWithAI() {
       try {
-        const prompt = `Generate a detailed persona who would be excited about this idea: "${this.originalIdea}". 
+        const prompt = "Generate a creative idea for a 5th-grade student's project:"
+        const generatedIdea = await this.generateTextWithAI(prompt)
+        this.setOriginalIdea(generatedIdea)
+      } catch (error) {
+        console.error('Failed to generate idea:', error)
+      }
+    },
+
+    async generatePersonaWithAI() {
+      try {
+        const prompt = `Generate a detailed persona who would be excited about this idea: "${this.currentIdea}". 
         Respond ONLY with a JSON object containing these fields:
         {
           "name": "Character Name",
@@ -186,10 +187,10 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
         }
         Do not include any text outside the JSON object.`
 
-        const generatedPersonaText = await generateText(prompt)
+        const generatedPersonaText = await this.generateTextWithAI(prompt)
         let generatedPersona
         try {
-          generatedPersona = JSON.parse(generatedPersonaText)
+          generatedPersona = JSON.parse(this.preprocessJsonResponse(generatedPersonaText))
         } catch (jsonError) {
           console.error('Failed to parse JSON:', generatedPersonaText)
           throw new Error('AI response was not in valid JSON format. Please try again.')
@@ -206,17 +207,10 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
         } else {
           this.setError('An unexpected error occurred while generating the persona')
         }
-      } finally {
-        this.setLoading(false)
       }
     },
 
-    
-
-    // Async action to generate a direction using AI
     async generateDirectionWithAI() {
-      this.setLoading(true)
-      this.setError(null)
       try {
         const personasContext = this.getPersonasAsString()
         const prompt = `Given the original idea: "${this.currentIdea}" 
@@ -227,22 +221,28 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
           "direction": "Brief description of the direction",
           "rationale": "Explanation of why this direction would appeal to the personas"
         }`
-
-        const generatedDirectionText = await generateText(prompt)
+    
+        const generatedDirectionText = await this.generateTextWithAI(prompt)
         
-        // Attempt to parse the response as JSON
+        // Extract JSON from the response
+        const jsonMatch = generatedDirectionText.match(/\{[\s\S]*\}/);
+        if (!jsonMatch) {
+          throw new Error('No valid JSON found in the response');
+        }
+    
+        const jsonString = jsonMatch[0];
         let generatedDirection
         try {
-          generatedDirection = JSON.parse(this.preprocessJsonResponse(generatedDirectionText))
+          generatedDirection = JSON.parse(jsonString)
         } catch (jsonError) {
-          console.error('Failed to parse JSON:', generatedDirectionText)
+          console.error('Failed to parse JSON:', jsonString)
           throw new Error('AI response was not in valid JSON format. Please try again.')
         }
-
+    
         if (!generatedDirection.direction || !generatedDirection.rationale) {
           throw new Error('AI response is missing required fields. Please try again.')
         }
-
+    
         this.addAvailableDirection(generatedDirection.direction, generatedDirection.rationale)
       } catch (error) {
         if (error instanceof Error) {
@@ -250,21 +250,38 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
         } else {
           this.setError('Failed to generate direction. Please try again.')
         }
-      } finally {
-        this.setLoading(false)
       }
     },
 
-    // Helper method to preprocess AI response
+    async refinedIdeaWithAI(refinementNotes: string) {
+      try {
+        const prompt = `Refine this idea: "${this.currentIdea}" with these changes: "${refinementNotes}"`
+        const refinedIdea = await this.generateTextWithAI(prompt)
+        this.updateCurrentIdea(refinedIdea.trim())
+      } catch (error) {
+        console.error('Failed to refine idea:', error)
+        this.setError('Failed to refine the idea. Please try again.')
+      }
+    },
+
+    async generateSocialMediaContentWithAI(platform: string) {
+      try {
+        const prompt = `Generate a creative ${platform} post for this idea: "${this.currentIdea}". 
+                        The post should be engaging and suitable for a ${platform} audience.`
+        const content = await this.generateTextWithAI(prompt)
+        this.addSocialMediaIdea(content.trim())
+      } catch (error) {
+        console.error('Failed to generate social media content:', error)
+        this.setError('Failed to generate social media content. Please try again.')
+      }
+    },
+
     preprocessJsonResponse(text: string): string {
-      // Remove any text before the first '{' and after the last '}'
       const jsonStart = text.indexOf('{')
       const jsonEnd = text.lastIndexOf('}')
       if (jsonStart !== -1 && jsonEnd !== -1 && jsonEnd > jsonStart) {
         return text.slice(jsonStart, jsonEnd + 1)
       }
-      // If we can't find valid JSON delimiters, return the original text
-      // This will cause a JSON parse error, which we catch and handle
       return text
     }
   }

@@ -72,7 +72,6 @@ import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useIdeaForgeStore } from '../stores/ideaForge'
 import ErrorDisplay from './ErrorDisplay.vue'
-import { generateText } from '../services/ollamaService'
 
 // Initialize the store and router
 const store = useIdeaForgeStore()
@@ -86,48 +85,11 @@ const canProceed = computed(() => selectedPersonas.value.length > 0)
 
 // Function to generate a new persona using AI
 const generatePersona = async () => {
-  store.setLoading(true)
-  store.setError(null)
   try {
-    const prompt = `Generate a detailed persona who would be excited about this idea: "${originalIdea.value}". 
-    Respond ONLY with a JSON object containing these fields:
-    {
-      "name": "Character Name",
-      "age": 25,
-      "occupation": "Job Title",
-      "interests": ["Interest 1", "Interest 2", "Interest 3"],
-      "reasonForInterest": "Brief explanation of why they find this idea interesting"
-    }
-    Do not include any text outside the JSON object.`
-
-    const generatedPersonaText = await generateText(prompt)
-    let generatedPersona
-    try {
-      generatedPersona = JSON.parse(generatedPersonaText)
-    } catch (jsonError) {
-      console.error('Failed to parse JSON:', generatedPersonaText)
-      throw new Error('AI response was not in valid JSON format. Please try again.')
-    }
-    
-    if (!generatedPersona.name || !generatedPersona.age || !generatedPersona.occupation || !Array.isArray(generatedPersona.interests) || !generatedPersona.reasonForInterest) {
-      throw new Error('AI response is missing required fields. Please try again.')
-    }
-
-    store.addPersona({
-      name: generatedPersona.name,
-      age: generatedPersona.age,
-      occupation: generatedPersona.occupation,
-      interests: generatedPersona.interests,
-      reasonForInterest: generatedPersona.reasonForInterest
-    })
+    await store.generatePersonaWithAI()
   } catch (error) {
-    if (error instanceof Error) {
-      store.setError(error.message)
-    } else {
-      store.setError('An unexpected error occurred while generating the persona')
-    }
-  } finally {
-    store.setLoading(false)
+    console.error('Failed to generate persona:', error)
+    // The error is already set in the store, so we don't need to set it here
   }
 }
 
@@ -149,5 +111,31 @@ const proceedToForge = () => {
 .mold {
   max-width: 600px;
   margin: 0 auto;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.q-btn {
+  margin-top: 1rem;
+}
+
+.bg-grey-2 {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 1rem;
 }
 </style>
