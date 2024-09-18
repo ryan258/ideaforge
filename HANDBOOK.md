@@ -64,17 +64,21 @@ Welcome to the IdeaForge Educator's Handbook. This guide is designed to help tea
 
 ### 4. The Anvil: Refining Ideas (Basic Structure Implemented)
 
-- **Objective**: Teach the importance of iteration and feedback in the creative process.
+- **Objective**: Teach the importance of iteration, feedback, and refinement in the creative process.
 - **Activity**:
-  - (Note: Full functionality coming soon. The following are suggested activities based on the current basic structure.)
-  - Discuss the chosen direction and brainstorm ways to refine it.
-  - Use the current idea display to spark discussions about potential improvements.
+  - Review AI-generated suggestions for improving the idea.
+  - Discuss persona feedback and how it relates to the target audience.
+  - Guide students in refining their ideas based on AI and persona input.
 - **How to use**:
-  - Review the current idea displayed on the screen.
-  - Use the "Continue to The Workshop" button to move to the next phase when ready.
+  - Read through the AI suggestions and persona feedback with the class.
+  - Use the text area to input refinements based on the discussion.
+  - Click the "Make My Idea Super Awesome!" button to see the refined idea.
+  - Repeat the process as needed before moving to the next stage.
 - **Discussion Points**:
   - How can we improve upon our chosen direction?
   - What potential challenges might we face with this idea, and how can we address them?
+  - How do the personas' perspectives help us understand our audience better?
+  - What makes feedback helpful, and how can we use it constructively?
 
 ### 5. The Workshop: Content Creation (Basic Structure Implemented)
 
@@ -145,7 +149,7 @@ Remember, the goal is not just to create content, but to foster a love for learn
 - AI Integration: The AI suggestions are now powered by the Ollama service. Encourage students to think critically about the AI-generated content and discuss how it aligns with their own ideas.
 - Persona Detail: While persona generation has improved, consider having students expand on the generated personas with more detailed characteristics based on their own experiences and imagination.
 - Progress Saving: The app doesn't yet save progress between sessions. Consider having students document their ideas, personas, and chosen directions externally as they work.
-- Partial Implementation: The Anvil, Workshop, and Finishing Touch sections have basic structures implemented. Full functionality for these sections is coming soon. Use the current structures as starting points for class discussions and activities.
+- Partial Implementation: The Workshop and Finishing Touch sections have basic structures implemented. Full functionality for these sections is coming soon. Use the current structures as starting points for class discussions and activities.
 - Social Media Content Generation: This feature is not yet fully implemented. Have students brainstorm and create content ideas manually based on their refined concepts.
 
  

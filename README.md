@@ -13,7 +13,7 @@ IdeaForge is a magical Vue.js single-page application that uses AI models to hel
 - **The Crucible** 🧪: Where ideas are born! Input your thoughts or let our AI suggest some cool ideas. (Implemented)
 - **The Mold** 🧬: Shape your target audience with fun persona generation. (Implemented)
 - **The Forge** 🔥: Explore different directions for your idea. It's like choosing your own adventure! (Implemented)
-- **The Anvil** 🔨: Refine and perfect your ideas with AI-powered feedback. (Basic structure implemented)
+- **The Anvil** 🔨: Refine and perfect your ideas with AI-powered feedback. (Implemented)
 - **The Workshop** 🛠️: Create amazing social media content that will wow your friends! (Basic structure implemented)
 - **The Finishing Touch** 🎨: Put the final sparkle on your creation. (Basic structure implemented)
 
@@ -32,11 +32,14 @@ IdeaForge is a magical Vue.js single-page application that uses AI models to hel
 - We've implemented a Pinia store for smooth state management.
 - Vue Router is set up for seamless navigation between components.
 - Basic error handling and user feedback mechanisms are in place.
-- The Forge is now operational! Generate and select idea directions.
-- Basic structures for The Anvil, The Workshop, and The Finishing Touch are in place.
+- The Forge is fully operational! Generate and select idea directions.
+- The Anvil is now implemented with AI-powered refinement and persona feedback.
+- Basic structures for The Workshop and The Finishing Touch are in place.
 - We've implemented consistent error handling across all components.
 - All components now use a shared ErrorDisplay component for uniform error presentation.
 - Ollama AI service integration is now in place for idea, persona, and direction generation.
+- Markdown rendering is implemented for better readability of AI-generated content.
+
 
 ## Getting Started 🚀
 
@@ -55,9 +58,9 @@ IdeaForge is a magical Vue.js single-page application that uses AI models to hel
 
 1. Start at The Crucible: Enter your own idea or generate one with AI.
 2. Move to The Mold: Create personas for your target audience.
-3. (Coming Soon) Explore idea directions in The Forge.
+3. Explore idea directions in The Forge.
 4. Explore and select idea directions in The Forge.
-5. (Basic structure ready) Refine your idea in The Anvil.
+5. Refine your idea with AI and persona feedback in The Anvil.
 6. (Basic structure ready) Generate social media content in The Workshop.
 7. (Basic structure ready) Add final touches in The Finishing Touch.
 

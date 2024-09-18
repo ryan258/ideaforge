@@ -52,6 +52,7 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
   }),
 
   getters: {
+    hasChosenDirection: (state) => !!state.chosenDirection,
     // Get the current idea (either the original or the latest iteration)
     currentIdea: (state): string => state.currentIteration || state.originalIdea,
 
@@ -107,6 +108,7 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
     setChosenDirection(direction: string, rationale: string) {
       this.chosenDirection = direction
       this.chosenDirectionRationale = rationale
+      console.log('Direction set:', this.chosenDirection) // Debug log
     },
 
     // Add a new available direction
@@ -209,13 +211,15 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
       }
     },
 
+    
+
     // Async action to generate a direction using AI
     async generateDirectionWithAI() {
       this.setLoading(true)
       this.setError(null)
       try {
         const personasContext = this.getPersonasAsString()
-        const prompt = `Given the original idea: "${this.originalIdea}" 
+        const prompt = `Given the original idea: "${this.currentIdea}" 
         and the following personas:\n\n${personasContext}\n\n
         Generate a creative direction for developing this idea that would appeal to these personas. 
         Respond with a JSON object in this format:
@@ -226,14 +230,12 @@ export const useIdeaForgeStore = defineStore('ideaForge', {
 
         const generatedDirectionText = await generateText(prompt)
         
-        // Preprocess the AI response to ensure it's valid JSON
-        const processedText = this.preprocessJsonResponse(generatedDirectionText)
-        
+        // Attempt to parse the response as JSON
         let generatedDirection
         try {
-          generatedDirection = JSON.parse(processedText)
+          generatedDirection = JSON.parse(this.preprocessJsonResponse(generatedDirectionText))
         } catch (jsonError) {
-          console.error('Failed to parse JSON:', processedText)
+          console.error('Failed to parse JSON:', generatedDirectionText)
           throw new Error('AI response was not in valid JSON format. Please try again.')
         }
 
